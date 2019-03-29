@@ -14,7 +14,14 @@ const createResponse = (buffer, lang, callback) => {
     lang: lang
   }).then((result) => {
     return callback({
+      error: false,
       text: result.text,
+    })
+  }).catch(err => {
+    console.log(err)
+    return callback({
+      error: true,
+      text: 'error',
     })
   })
 }

@@ -2,8 +2,8 @@
   "name": "image-to-text-api",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://x-token-auth@bitbucket.org/stepri/image-to-text-api.git",
-  "author": "Steven Prins <steven@kaartje2go.nl>",
+  "repository": "https://github.com/stepri/image-to-text-api.git",
+  "author": "Steven Prins <github@stevenprins.com>",
   "license": "MIT",
   "scripts": {
     "start": "node index"
