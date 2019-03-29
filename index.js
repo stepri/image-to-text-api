@@ -55,6 +55,7 @@ app.get('/recognize', (req, res) => {
 })
 
 app.post('/recognize', upload.single('image'), (req, res) => {
+  console.log(req.file)
   createResponse(req.file.buffer, 'eng', (result) => {
     return res.send(result)
   })
