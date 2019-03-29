@@ -5,6 +5,9 @@
   "repository": "https://x-token-auth@bitbucket.org/stepri/image-to-text-api.git",
   "author": "Steven Prins <steven@kaartje2go.nl>",
   "license": "MIT",
+  "scripts": {
+    "start": "node index"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
