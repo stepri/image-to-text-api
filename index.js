@@ -1,13 +1,11 @@
 const express = require('express')
-const bodyParser = require('body-parser');
-const morganBody = require('morgan-body');
 const morgan = require('morgan')
 const Tesseract = require('tesseract.js')
 const request = require('request');
 const multer = require('multer')
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '/uploads')
+    cb(null, './uploads')
   },
   filename: (req, file, cb) => {
     cb(null, file.fieldname + '-' + Date.now())
@@ -18,9 +16,6 @@ const upload = multer({ storage: storage })
 
 const app = express()
 app.use(morgan('combined'))
-app.use(bodyParser.json());
-morganBody(app);
-const port = process.env.PORT || 3000;
 
 const createResponse = (buffer, lang, callback) => {
   Tesseract.recognize(buffer, {
@@ -89,5 +84,6 @@ app.use(function (err, req, res, next) {
   })
 })
 
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`image-to-text-api listening on port ${port}!`))
