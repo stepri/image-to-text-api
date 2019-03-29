@@ -12,6 +12,8 @@ const port = process.env.PORT || 3000;
 const createResponse = (buffer, lang, callback) => {
   Tesseract.recognize(buffer, {
     lang: lang
+  }).progress(message => {
+    console.log('progress is: ', message)
   }).then((result) => {
     return callback({
       error: false,
@@ -23,7 +25,7 @@ const createResponse = (buffer, lang, callback) => {
       error: true,
       text: 'error',
     })
-  })
+  });
 }
 
 app.get('/recognize', (req, res) => {
@@ -44,7 +46,7 @@ app.get('/recognize', (req, res) => {
       encoding: null
      }, (err, response, body) => {
       createResponse(body, langauge, (result) => {
-        return res.send(result.text.replace(/(?:\r\n|\r|\n)/g, '<br>'))
+        return res.send(result)
       })
     })
   });
@@ -52,8 +54,8 @@ app.get('/recognize', (req, res) => {
 })
 
 app.post('/recognize', upload.single('image'), (req, res) => {
-  createResponse(req.file.buffer, 'en', (result) => {
-    return res.send(result.text.replace(/(?:\r\n|\r|\n)/g, '<br>'))
+  createResponse(req.file.buffer, 'eng', (result) => {
+    return res.send(result)
   })
 })
 
