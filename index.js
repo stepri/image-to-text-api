@@ -66,9 +66,8 @@ app.get('/recognize', (req, res) => {
 
 })
 
-app.post('/recognize', upload.any(), (req, res) => {
-  console.log(req.body, req.files)
-  createResponse(req.files[0].path, 'eng', (result) => {
+app.post('/recognize', upload.single('image'), (req, res) => {
+  createResponse(req.file.path, 'eng', (result) => {
     return res.send(result)
   })
 })
