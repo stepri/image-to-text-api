@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const Tesseract = require('tesseract.js')
 const request = require('request');
 const multer = require('multer')
@@ -6,7 +7,7 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 
 const app = express()
-
+app.use(morgan('combined'))
 const port = process.env.PORT || 3000;
 
 const createResponse = (buffer, lang, callback) => {
@@ -68,5 +69,13 @@ app.get('/', (req, res) => {
 </form>
   `)
 })
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send({
+    error: true
+  })
+})
+
 
 app.listen(port, () => console.log(`image-to-text-api listening on port ${port}!`))
