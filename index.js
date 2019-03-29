@@ -5,7 +5,15 @@ const morgan = require('morgan')
 const Tesseract = require('tesseract.js')
 const request = require('request');
 const multer = require('multer')
-const storage = multer.memoryStorage()
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '/uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+
 const upload = multer({ storage: storage })
 
 const app = express()
@@ -59,8 +67,8 @@ app.get('/recognize', (req, res) => {
 })
 
 app.post('/recognize', upload.any(), (req, res) => {
-  console.log(req.files)
-  createResponse(req.files[0].buffer, 'eng', (result) => {
+  console.log(req.body, req.files)
+  createResponse(req.files[0].path, 'eng', (result) => {
     return res.send(result)
   })
 })
